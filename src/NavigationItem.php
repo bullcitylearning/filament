@@ -10,6 +10,8 @@ class NavigationItem
 
     public $label;
 
+    public $group;
+
     public $sort = 0;
 
     public $url;
@@ -37,6 +39,13 @@ class NavigationItem
     public function label($label)
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    public function group($group)
+    {
+        $this->group = $group;
 
         return $this;
     }

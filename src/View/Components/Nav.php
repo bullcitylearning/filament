@@ -21,7 +21,7 @@ class Nav extends Component
                     (string) Str::of(route('filament.dashboard', [], false))->after('/')
                 )
                 ->icon('heroicon-o-home')
-                ->sort(-1),
+                ->sort(-1)
         );
 
         foreach (Filament::getResources() as $resource) {
@@ -36,7 +36,7 @@ class Nav extends Component
             }
         }
 
-        $this->items = $this->items->sortBy(fn ($item) => $item->sort)->values();
+        $this->items = $this->items->sortBy('group')->sortBy(fn ($item) => $item->sort)->groupBy('group')->values();
     }
 
     public function render()

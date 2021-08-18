@@ -17,6 +17,8 @@ class Resource
 
     public static $navigationLabel;
 
+    public static $navigationGroup;
+
     public static $navigationSort = 0;
 
     public static $routeNamePrefix = 'filament.resources';
@@ -78,6 +80,11 @@ class Resource
         return (string) Str::title(static::getPluralLabel());
     }
 
+    public static function getNavigationGroup()
+    {
+        return static::$navigationGroup;
+    }
+
     public static function getNavigationSort()
     {
         return static::$navigationSort;
@@ -114,7 +121,8 @@ class Resource
                         ->append('*'),
                 )
                 ->icon(static::getIcon())
-                ->sort(static::getNavigationSort()),
+                ->sort(static::getNavigationSort())
+                ->group(static::getNavigationGroup()),
         ];
     }
 

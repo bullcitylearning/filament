@@ -15,6 +15,8 @@ class Page extends Component
 
     public static $navigationLabel;
 
+    public static $navigationGroup;
+
     public static $navigationSort = 0;
 
     public static $slug;
@@ -45,6 +47,11 @@ class Page extends Component
         return (string) Str::of(class_basename(static::class))
             ->kebab()
             ->replace('-', ' ');
+    }
+
+    public static function getNavigationGroup()
+    {
+        return static::$navigationGroup;
     }
 
     public static function getNavigationSort()
@@ -97,7 +104,8 @@ class Page extends Component
                         ->append('*'),
                 )
                 ->icon(static::getIcon())
-                ->sort(static::getNavigationSort()),
+                ->sort(static::getNavigationSort())
+                ->group(static::getNavigationGroup()),
         ];
     }
 
