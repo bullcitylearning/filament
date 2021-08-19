@@ -3,15 +3,20 @@
 namespace Filament\Pages;
 
 use Filament\Filament;
-use Filament\NavigationItem;
+use Filament\View\Concerns\ChecksNavigationGroup;
+use Filament\View\NavigationItem;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Page extends Component
 {
+    use ChecksNavigationGroup;
+
     public static $icon = 'heroicon-o-document-text';
 
     public static $layout = 'filament::components.layouts.app';
+
+    public static $navigationGroup = null;
 
     public static $navigationLabel;
 
@@ -43,8 +48,7 @@ class Page extends Component
         }
 
         return (string) Str::of(class_basename(static::class))
-            ->kebab()
-            ->replace('-', ' ');
+            ->snake(' ')->title();
     }
 
     public static function getNavigationSort()
@@ -91,14 +95,17 @@ class Page extends Component
     {
         return [
             NavigationItem::make(Str::title(static::getNavigationLabel()), static::generateUrl())
-                ->activeRule(
-                    (string) Str::of(parse_url(static::generateUrl(), PHP_URL_PATH))
-                        ->after('/')
-                        ->append('*'),
-                )
+                ->activeRule(static::defaultActiveRule())
                 ->icon(static::getIcon())
                 ->sort(static::getNavigationSort()),
         ];
+    }
+
+    public static function defaultActiveRule()
+    {
+        return (string) Str::of(parse_url(static::generateUrl(), PHP_URL_PATH))
+            ->after('/')
+            ->append('*');
     }
 
     public function notify($message)

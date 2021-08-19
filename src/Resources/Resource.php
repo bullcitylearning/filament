@@ -2,18 +2,23 @@
 
 namespace Filament\Resources;
 
-use Filament\NavigationItem;
+use Filament\View\Concerns\ChecksNavigationGroup;
+use Filament\View\NavigationItem;
 use Filament\Resources\Forms\Form;
 use Filament\Resources\Tables\Table;
 use Illuminate\Support\Str;
 
 class Resource
 {
+    use ChecksNavigationGroup;
+
     public static $icon = 'heroicon-o-collection';
 
     public static $label;
 
     public static $model;
+
+    public static $navigationGroup = null;
 
     public static $navigationLabel;
 
@@ -54,8 +59,7 @@ class Resource
         }
 
         return (string) Str::of(class_basename(static::getModel()))
-            ->kebab()
-            ->replace('-', ' ');
+            ->snake(' ')->title();
     }
 
     public static function getModel()
@@ -108,14 +112,17 @@ class Resource
     {
         return [
             NavigationItem::make(static::getNavigationLabel(), static::generateUrl())
-                ->activeRule(
-                    (string) Str::of(parse_url(static::generateUrl(), PHP_URL_PATH))
-                        ->after('/')
-                        ->append('*'),
-                )
+                ->activeRule(static::defaultActiveRule())
                 ->icon(static::getIcon())
                 ->sort(static::getNavigationSort()),
         ];
+    }
+
+    public static function defaultActiveRule(): string
+    {
+        return (string) Str::of(parse_url(static::generateUrl(), PHP_URL_PATH))
+            ->after('/')
+            ->append('*');
     }
 
     public static function relations()
