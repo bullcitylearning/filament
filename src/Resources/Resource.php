@@ -22,8 +22,6 @@ class Resource
 
     public static $navigationLabel;
 
-    public static $navigationGroup;
-
     public static $navigationSort = 0;
 
     public static $routeNamePrefix = 'filament.resources';

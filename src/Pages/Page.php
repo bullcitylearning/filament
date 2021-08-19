@@ -20,8 +20,6 @@ class Page extends Component
 
     public static $navigationLabel;
 
-    public static $navigationGroup;
-
     public static $navigationSort = 0;
 
     public static $slug;
