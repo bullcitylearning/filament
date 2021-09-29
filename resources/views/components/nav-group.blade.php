@@ -31,7 +31,7 @@
         </button>
 
     </div>
-    <ol :class="{ 'block' : {{ $subNavLabel }} , 'hidden' : !{{ $subNavLabel }}}"  @click.away="{{ $subNavLabel }} = false">
+    <ol class="pl-3" :class="{ 'block' : {{ $subNavLabel }} , 'hidden' : !{{ $subNavLabel }}}"  @click.away="{{ $subNavLabel }} = false">
         @foreach($items as $item)
             <li>
                 <x-filament::nav-link
